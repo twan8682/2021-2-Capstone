@@ -8,7 +8,7 @@
 ## 👩🏻‍💻 팀원 구성 👩🏻‍💻
 [김태완 (팀장)](https://github.com/twan8682)| [김신영](https://github.com/dryhusky) | [이도연](https://github.com/Lee-Do-Yeon) | [한지원](https://github.com/jiwon0829)
 --------- | --------- | --------- | ---------
-**Github 관리, 안드로이드**<br>QR 리더기 개발<br>안드로이드 | **백엔드**<br>소켓 통신<br>서버 |**웹 크롤링**<br>url 데이터 처리<br>소켓 통신 | **안드로이드 DB, 디자인**<br>안드로이드 내장 디비 관리<br>앱 디자인
+카메라 센서, 아두이노 | 이미지 학습 및 데이터 라벨링 |웹, 자율주행 | SQL 데이터 처리, 
 
 <br><br>
 
