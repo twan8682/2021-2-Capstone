@@ -1,0 +1,6 @@
+CREATE TABLE result(
+	r_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	r_time DATETIME,
+	r_location VARCHAR(20),
+	r_condition VARCHAR(20)
+);
