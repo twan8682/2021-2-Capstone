@@ -1,6 +1,7 @@
 CREATE TABLE result(
 	r_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	r_time DATETIME,
-	r_location VARCHAR(20),
-	r_condition VARCHAR(20)
+	lat VARCHAR(20),
+	lng VARCHAR(20),
+	r_pic VARCHAR(10)
 );
