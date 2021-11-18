@@ -65,12 +65,14 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
         }
     }
 
+
+    //gps 값 얻어오기
     class GPSListener implements LocationListener {
         public void onLocationChanged(Location location) {
             Double latitude = location.getLatitude();
             Double longitude = location.getLongitude();
 
-            String message = "내 위치 -> Latitude : "+ latitude + "\nLongitude:"+ longitude;
+            String message = "now location\nLatitude : "+ latitude + "\nLongitude:"+ longitude;
             textView.setText(message);
         }
 
@@ -81,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
         public void onStatusChanged(String provider, int status, Bundle extras) { }
     }
 
+
+    //위험에 대한 권한 부여
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
