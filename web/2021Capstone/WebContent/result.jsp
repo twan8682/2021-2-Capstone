@@ -4,7 +4,7 @@
 <head>
 	<title>Result</title>
 	<link rel="stylesheet" href="./resources/css/bootstrap.min.css" />
-  	<script src="./resources/js/map2.js"></script>
+  	<script src="./resources/js/map.js"></script>
   	<script src="./resources/js/jquery-3.6.0.min.js"></script>
 </head>
 
