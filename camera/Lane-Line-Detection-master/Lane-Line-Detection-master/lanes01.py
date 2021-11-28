@@ -53,21 +53,7 @@ def region_of_interest(image):
     cv2.fillPoly(mask,polygons,255)     # A complete white triangle polygon on a black mask.
     masked_image = cv2.bitwise_and(image,mask)
     return masked_image
-'''
-image = cv2.imread('test_3.png')
-lane_image = np.copy(image)     # Always make a copy when working with arrays rather than directly assigning
-canny_image = canny(lane_image)
-cropped_image = region_of_interest(canny_image)
-lines = cv2.HoughLinesP(cropped_image,2,np.pi/180,10,np.array([]),minLineLength=10,maxLineGap=5)
-averaged_lines = average_slope_intercept(lane_image,lines)
-line_image = display_lines(lane_image,averaged_lines)
-combo_image = cv2.addWeighted(lane_image,0.8,line_image,1,1)    # Imposing the line_image on the original image
 
-img = np.array(combo_image, dtype=np.uint8)
-cv2.imshow('Result',img)
-cv2.waitKey(0) 
-
-'''
 num = 1
 conn = pymysql.connect(host='localhost', user='root', password='1234', charset='utf8', db='capstone0') #DB 연결
 cur = conn.cursor()
@@ -82,7 +68,7 @@ while(cap.isOpened()):
     #line_image = display_lines(frame,averaged_lines)
     #combo_image = cv2.addWeighted(frame,0.8,line_image,1,1)    # Imposing the line_image on the original image
 
-    cv2.imshow('Result',frame)
+    #cv2.imshow('Result',frame)
     
     key = cv2.waitKey(1)
 

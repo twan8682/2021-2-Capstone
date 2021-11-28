@@ -1,6 +1,6 @@
 import cv2
 # 샘플 영상
-url = 'http://192.168.117.117:81/stream'
+url = 'http://192.168.219.117:81/stream'
 cap = cv2.VideoCapture(url)
 
 while True :
