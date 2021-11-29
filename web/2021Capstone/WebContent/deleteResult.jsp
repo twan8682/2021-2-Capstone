@@ -4,7 +4,7 @@
 <%@ include file="dbconn.jsp"%>
 <%
 String r_id = request.getParameter("r_id");
-String picPath = "★경로" + r_id + ".png";
+String picPath = "★경로" + r_id + ".jpg";
 //★절대경로 입력. Invalid escape sequence 오류 발생 시 -> C:\\aJSP\\capstone\\과 같이 작성할 것. (\를 두개)
 
 File f = new File(picPath);

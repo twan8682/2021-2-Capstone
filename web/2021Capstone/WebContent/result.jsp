@@ -34,7 +34,7 @@
  	%>
  
    <tr align="center">
-      <td style="width:30%"><img src="./resources/images/<%=rs.getString("r_id")%>.png" style="height:300"></td>
+      <td style="width:30%"><img src="./resources/images/<%=rs.getString("r_id")%>.jpg" style="height:300"></td>
       <td style="width:30%">
   <div class="map" id="<%=rs.getString("r_id")%>" lat="<%=rs.getString("lat")%>" lng="<%=rs.getString("lng")%>" style="width:300; height:300;"></div>
       </td>
