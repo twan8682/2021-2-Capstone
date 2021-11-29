@@ -7,16 +7,42 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pedro.library.AutoPermissions;
 import com.pedro.library.AutoPermissionsListener;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
 public class MainActivity extends AppCompatActivity implements AutoPermissionsListener {
     TextView textView;
+    Button button;
+    Button connect_btn;
+    EditText ip_edit;
+    TextView show_text;
+    int la, lo;
+
+
+    // 소켓통신에 필요한것
+    private String html = "";
+    private Handler mHandler;
+
+    private Socket socket;
+
+    private DataOutputStream dos;
+    private DataInputStream dis;
+
+    private String ip = "";            // IP 번호
+    private int port = 8080;                          // port 번호
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
 
         textView = findViewById(R.id.textView);
 
-        Button button = findViewById(R.id.button);
+        button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,6 +60,78 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
         });
 
         AutoPermissions.Companion.loadAllPermissions(this, 101);
+
+        connect_btn = (Button)findViewById(R.id.ipbutton);
+        connect_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                switch(v.getId()){
+                    case R.id.ipbutton:     // ip 받아오는 버튼
+                        connect();
+                }
+            }
+        });
+
+         ip_edit = (EditText)findViewById(R.id.editTextTextPersonName);
+        show_text = (TextView)findViewById(R.id.show_text);
+
+    }
+
+    //port connect
+    // 로그인 정보 db에 넣어주고 연결시켜야 함.
+    void connect(){
+        mHandler = new Handler();
+        Log.w("connect","연결 하는중");
+        // 받아오는거
+        Thread checkUpdate = new Thread() {
+            public void run() {
+                // ip받기
+                String newip = String.valueOf(ip_edit.getText());
+
+                // 서버 접속
+                try {
+                    socket = new Socket(newip, port);
+                    Log.w("서버 접속됨", "서버 접속됨");
+                } catch (IOException e1) {
+                    Log.w("서버접속못함", "서버접속못함");
+                    e1.printStackTrace();
+                }
+
+                Log.w("edit 넘어가야 할 값 : ","안드로이드에서 서버로 연결요청");
+
+                try {
+                    dos = new DataOutputStream(socket.getOutputStream());   // output에 보낼꺼 넣음
+                    dis = new DataInputStream(socket.getInputStream());     // input에 받을꺼 넣어짐
+                    //dos.writeUTF(String.valueOf(latitude)+"  " +String.valueOf(longitude));
+                    dos.writeUTF(String.valueOf(la));
+                    /*while(true){
+                        dos.writeUTF(String.valueOf(latitude)+"  " +String.valueOf(longitude));
+                        Thread.sleep(1000);
+                    }*/
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.w("버퍼", "버퍼생성 잘못됨");
+                }
+                Log.w("버퍼","버퍼생성 잘됨");
+
+                // 서버에서 계속 받아옴 - 한번은 문자, 한번은 숫자를 읽음. 순서 맞춰줘야 함.
+                /*try {
+                    String line = "";
+                    int line2;
+                    while(true) {
+                        line = (String)dis.readUTF();
+                        line2 = (int)dis.read();
+                        Log.w("서버에서 받아온 값 ",""+line);
+                        Log.w("서버에서 받아온 값 ",""+line2);
+                    }
+                }catch (Exception e){
+
+                }*/
+            }
+        };
+        // 소켓 접속 시도, 버퍼생성
+        checkUpdate.start();
     }
 
     public void startLocationService() {
@@ -44,6 +142,10 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
             if (location != null) {
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
+
+                la = (int)latitude*10000000;
+                lo = (int)longitude*1000000;
+
                 String message = "최근 위치 -> Latitude : " + latitude + "\nLongitude:" + longitude;
 
                 textView.setText(message);
@@ -65,14 +167,12 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
         }
     }
 
-
-    //gps 값 얻어오기
     class GPSListener implements LocationListener {
         public void onLocationChanged(Location location) {
             Double latitude = location.getLatitude();
             Double longitude = location.getLongitude();
 
-            String message = "now location\nLatitude : "+ latitude + "\nLongitude:"+ longitude;
+            String message = "내 위치 -> Latitude : "+ latitude + "\nLongitude:"+ longitude;
             textView.setText(message);
         }
 
@@ -83,8 +183,6 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
         public void onStatusChanged(String provider, int status, Bundle extras) { }
     }
 
-
-    //위험에 대한 권한 부여
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
