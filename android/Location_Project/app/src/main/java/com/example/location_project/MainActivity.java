@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
             }
         });
 
-         ip_edit = (EditText)findViewById(R.id.editTextTextPersonName);
+        ip_edit = (EditText)findViewById(R.id.editTextTextPersonName);
         show_text = (TextView)findViewById(R.id.show_text);
 
     }
@@ -91,9 +91,9 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
                 // 서버 접속
                 try {
                     socket = new Socket(newip, port);
-                    Log.w("서버 접속됨", "서버 접속됨");
+                    Log.w("server ok", "서버 접속됨");
                 } catch (IOException e1) {
-                    Log.w("서버접속못함", "서버접속못함");
+                    Log.w("server no", "서버접속못함");
                     e1.printStackTrace();
                 }
 
@@ -102,8 +102,8 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
                 try {
                     dos = new DataOutputStream(socket.getOutputStream());   // output에 보낼꺼 넣음
                     dis = new DataInputStream(socket.getInputStream());     // input에 받을꺼 넣어짐
-                    //dos.writeUTF(String.valueOf(latitude)+"  " +String.valueOf(longitude));
-                    dos.writeUTF(String.valueOf(la));
+                    dos.writeUTF(String.valueOf(la) + " " + String.valueOf(lo));
+                    //dos.writeUTF(String.valueOf(lo));
                     /*while(true){
                         dos.writeUTF(String.valueOf(latitude)+"  " +String.valueOf(longitude));
                         Thread.sleep(1000);
@@ -115,19 +115,24 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
                 }
                 Log.w("버퍼","버퍼생성 잘됨");
 
+
                 // 서버에서 계속 받아옴 - 한번은 문자, 한번은 숫자를 읽음. 순서 맞춰줘야 함.
-                /*try {
+                try {
                     String line = "";
                     int line2;
                     while(true) {
-                        line = (String)dis.readUTF();
+                        //line = (String)dis.readUTF();
                         line2 = (int)dis.read();
-                        Log.w("서버에서 받아온 값 ",""+line);
+                        //Log.w("서버에서 받아온 값 ",""+line);
                         Log.w("서버에서 받아온 값 ",""+line2);
+
+                        if(line2==1 || line.equals('1')){
+                            startLocationService();
+                            dos.writeUTF(String.valueOf(la) + " " + String.valueOf(lo));
+                        }
                     }
                 }catch (Exception e){
-
-                }*/
+                }
             }
         };
         // 소켓 접속 시도, 버퍼생성
@@ -143,8 +148,8 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
 
-                la = (int)latitude*10000000;
-                lo = (int)longitude*1000000;
+                la = (int)(latitude*10000000);
+                lo = (int)(longitude*10000000);
 
                 String message = "최근 위치 -> Latitude : " + latitude + "\nLongitude:" + longitude;
 
