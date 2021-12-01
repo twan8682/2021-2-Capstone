@@ -117,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
 
 
                 // 서버에서 계속 받아옴 - 한번은 문자, 한번은 숫자를 읽음. 순서 맞춰줘야 함.
-                try {
-                    String line = "";
+                /*try {
+                    //String line = "";
                     int line2;
                     while(true) {
                         //line = (String)dis.readUTF();
@@ -126,13 +126,15 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
                         //Log.w("서버에서 받아온 값 ",""+line);
                         Log.w("서버에서 받아온 값 ",""+line2);
 
-                        if(line2==1 || line.equals('1')){
+                        if(line2==1){
+                            Log.w("서버로 전달할 준비 ","ready");
                             startLocationService();
-                            dos.writeUTF(String.valueOf(la) + " " + String.valueOf(lo));
+                            //dos.writeUTF(String.valueOf(la) + " " + String.valueOf(lo));
                         }
                     }
                 }catch (Exception e){
-                }
+                }*/
+
             }
         };
         // 소켓 접속 시도, 버퍼생성
@@ -140,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
     }
 
     public void startLocationService() {
+        Log.w("위치갱신","gps");
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         try {
