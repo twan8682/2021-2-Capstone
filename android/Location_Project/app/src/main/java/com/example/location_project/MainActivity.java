@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements AutoPermissionsLi
     private DataInputStream dis;
 
     private String ip = "";            // IP 번호
-    private int port = 8080;                          // port 번호
+    private int port = 4000;                          // port 번호
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
