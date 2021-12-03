@@ -58,7 +58,7 @@ num = 1
 conn = pymysql.connect(host='localhost', user='root', password='1234', charset='utf8', db='capstone0') #DB 연결
 cur = conn.cursor()
 
-cap = cv2.VideoCapture('test_video.mp4')
+cap = cv2.VideoCapture('http://192.168.219.117:81/stream')
 while(cap.isOpened()):
     _, frame = cap.read()
     canny_image = canny(frame)
@@ -68,7 +68,7 @@ while(cap.isOpened()):
     #line_image = display_lines(frame,averaged_lines)
     #combo_image = cv2.addWeighted(frame,0.8,line_image,1,1)    # Imposing the line_image on the original image
 
-    #cv2.imshow('Result',frame)
+    cv2.imshow('Result',frame)
     
     key = cv2.waitKey(1)
 
