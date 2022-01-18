@@ -50,7 +50,7 @@
  	if (conn != null)
  		conn.close();
    %>
-   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrCFzEbGco1z0IZPsGfpw2BtpRbhI03JA&callback=initMap&region=kr"></script>
+   <script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap&region=kr"></script>
  </tbody> 
 </table>
 
